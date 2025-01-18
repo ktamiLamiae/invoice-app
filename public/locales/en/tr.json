@@ -1,0 +1,12 @@
+{
+  "welcome": "Welcome!",
+  "signIn": "Sign in to your account",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "signUp": "Sign up",
+  "english": "English",
+  "french": "French",
+  "spanish": "Spanish",
+  "german": "German"
+}
