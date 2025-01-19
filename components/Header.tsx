@@ -1,24 +1,40 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useTranslation } from 'next-i18next';
 import i18n from '../lib/i18n';
 
-const userInfo = {
+interface UserInfo {
+  name: string;
+  email: string;
+  profileImage: string;
+}
+
+const userInfo: UserInfo = {
   name: 'John Doe',
   email: 'pKwJt@example.com',
-  profileImage: '/images/user-2.jpg'
+  profileImage: '/images/user-2.jpg',
 };
-const Header = () => {
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+const Header: React.FC = () => {
+  const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
   const { t } = useTranslation();
+
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
+
   const handleLanguageChange = (language: 'en' | 'fr' | 'es' | 'de') => {
     i18n.changeLanguage(language);
-};
+    localStorage.setItem('language', language);
+  };
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem('language') as 'en' | 'fr' | 'es' | 'de';
+    if (storedLanguage && storedLanguage !== i18n.language) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, []);
 
   return (
     <div>
@@ -30,10 +46,10 @@ const Header = () => {
           height="24"
           onClick={toggleSidebar}
         />
-        {t('welcome')}
         <div className="flex items-center space-x-4">
           <div className="mr-4">
             <select
+              value={i18n.language}
               onChange={(e) => handleLanguageChange(e.target.value as 'en' | 'fr' | 'es' | 'de')}
               className="p-2 border border-gray-300 rounded-md"
             >

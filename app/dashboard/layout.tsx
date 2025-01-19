@@ -1,4 +1,3 @@
-// "use client";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import React from "react";
@@ -11,26 +10,29 @@ export const metadata: Metadata = {
   title: "Dashboard",
   description: "Dashboard",
 };
+
 export default function Layout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <LanguageProvider>
-    <div className="bg-gray-200 h-screen overflow-x-hidden">
-      <div className="flex w-full">
-        <Sidebar />
-        <div className="w-full bg-lightgray">
-            <Header />
-          <section id="content" className="lg:ml-72 p-6 transition-all duration-300 ease-in-out">
-            <div className="lg:ml-72">
-              {children}
+    <html lang="en">
+      <body>
+        <LanguageProvider>
+          <div className="bg-gray-200 h-screen overflow-x-hidden">
+            <div className="flex w-full">
+              <Sidebar />
+              <div className="w-full bg-lightgray">
+                <Header />
+                <section className="mx-10 lg:ml-72 lg:mr-10 py-10">
+                  <div>{children}</div>
+                </section>
+              </div>
             </div>
-          </section>
-        </div>
-      </div>
-    </div>
-    </LanguageProvider>
+          </div>
+        </LanguageProvider>
+      </body>
+    </html>
   );
 }

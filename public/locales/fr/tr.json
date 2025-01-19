@@ -1,9 +1,30 @@
 {
     "welcome": "Bienvenue!",
-    "signIn": "Connectez-vous à votre compte",
+    "signIn": "Se connecter",
     "email": "Email",
     "password": "Mot de passe",
     "forgotPassword": "Mot de passe oublié?",
-    "signUp": "S'inscrire"
+    "signUp": "S'inscrire",
+    "dashboard" :"Tableau de bord",
+    "logout":"Se deconnecter",
+    "client":"Client",
+    "vehicle":"Véhicule",
+    "date":"Date",
+    "deadline":"Date de fin",
+    "payment_method":"Méthode de paiement",
+    "payment_status":"Statut de paiement",
+    "memo":"Remarque",
+    "save":"Sauvegarder",
+    "cancel":"Annuler",
+    "invoice_form":"Formulaire de facturation",
+    "select_vehicle":"Sélectionner un véhicule",
+    "select_client":"Sélectionner un client",
+    "cash":"En espece",
+    "credit_card":"Carte de crédit",
+    "bank_transfer":"Virement bancaire",
+    "paid":"Payé",
+    "unpaid":"Non payé",
+    "amount":"Montant",
+    "advance":"Avance"
   }
   

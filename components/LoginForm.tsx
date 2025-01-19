@@ -1,6 +1,8 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import i18n from '../lib/i18n';
+
 const LoginForm: React.FC = () => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
@@ -24,7 +26,31 @@ const LoginForm: React.FC = () => {
             alert(result.message);
         }
     };
+
+    const handleLanguageChange = (language: 'en' | 'fr' | 'es' | 'de') => {
+        i18n.changeLanguage(language);
+        localStorage.setItem('language', language);
+      };
+      useEffect(() => {
+        const storedLanguage = localStorage.getItem('language') as 'en' | 'fr' | 'es' | 'de';
+        if (storedLanguage && storedLanguage !== i18n.language) {
+          i18n.changeLanguage(storedLanguage);
+        }
+      }, []);
     return (
+        <>
+        <div className="absolute top-2 right-2">
+        <select
+             value={i18n.language}
+             onChange={(e) => handleLanguageChange(e.target.value as 'en' | 'fr' | 'es' | 'de')}
+              className="p-2 border border-gray-300 rounded-md"
+            >
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
+              <option value="de">Deutsch</option>
+            </select>
+        </div>
         <form onSubmit={handleSubmit}>
             <div className="h-screen flex items-center justify-center bg-[#f1f1f1]">
                 <div className="relative bg-white w-full max-w-[400px] sm:max-w-sm md:max-w-md h-auto shadow-[2px_9px_49px_-17px_rgba(0,0,0,0.1)] p-6 sm:p-8 rounded-3xl">
@@ -85,6 +111,7 @@ const LoginForm: React.FC = () => {
                 </div>
             </div>
         </form>
+        </>
     );
 };
 
