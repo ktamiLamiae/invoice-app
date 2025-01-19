@@ -1,9 +1,29 @@
 {
-    "welcome": "Willkommen!",
-    "signIn": "Melden Sie sich bei Ihrem Konto an",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "forgotPassword": "Passwort vergessen?",
-    "signUp": "Registrieren"
-  }
-  
+  "welcome": "Willkommen!",
+  "signIn": "Abmelden",
+  "email": "E-Mail",
+  "password": "Passwort",
+  "forgotPassword": "Passwort vergessen?",
+  "signUp": "Registrieren",
+  "dashboard": "Armaturenbrett",
+  "logout": "Abmelden",
+  "client": "Kunde",
+  "vehicle": "Fahrzeug",
+  "date": "Datum",
+  "deadline": "Enddatum",
+  "payment_method": "Zahlungsart",
+  "payment_status": "Zahlungsstatus",
+  "memo": "Bemerkung",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "invoice_form": "Rechnungsformular",
+  "select_vehicle": "Fahrzeug auswählen",
+  "select_client": "Kunde auswählen",
+  "cash": "Bar",
+  "credit_card": "Kreditkarte",
+  "bank_transfer": "Banküberweisung",
+  "paid": "Bezahlt",
+  "unpaid": "Unbezahlt",
+  "amount": "Betrag",
+  "advance": "Vorsteuer"
+}

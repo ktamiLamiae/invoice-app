@@ -1,16 +1,20 @@
-"use client";
+'use client';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Icon } from '@iconify/react';
 
-const Sidebar = () => {
-  const { t } = useTranslation();
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("dashboard");
+type MenuType = 'dashboard' | 'store';
 
-  const handleMenuClick = (menu: string) => {
+const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
+  const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
+  const [activeMenu, setActiveMenu] = useState<MenuType>('dashboard');
+
+  const handleMenuClick = (menu: MenuType) => {
     setActiveMenu(menu);
   };
+
+  // console.log('Current language in Sidebar:', i18n.language, t('welcome'));
 
   return (
     <section
@@ -24,41 +28,53 @@ const Sidebar = () => {
         <span className="ml-2">{t('appName')}</span>
       </a>
       <ul className="mt-12 space-y-4">
-        <li className={activeMenu === "dashboard" ? "active" : ""}>
+        <li className={activeMenu === 'dashboard' ? 'active' : ''}>
           <button
-            onClick={() => handleMenuClick("dashboard")}
+            onClick={() => handleMenuClick('dashboard')}
             className={`flex items-center p-4 w-full text-left ${
-              activeMenu === "dashboard"
-                ? "bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600"
-                : "hover:bg-gray-300 text-gray-800"
+              activeMenu === 'dashboard'
+                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                : 'hover:bg-gray-300 text-gray-800'
             }`}
           >
             <Icon
               icon="bxs:dashboard"
               width={20}
               height={20}
-              className={activeMenu === "dashboard" ? "text-blue-600" : ""}
+              className={activeMenu === 'dashboard' ? 'text-blue-600' : ''}
             />
             <span className="ml-3">{t('dashboard')}</span>
           </button>
         </li>
-        <li className={activeMenu === "store" ? "active" : ""}>
+        <li className={activeMenu === 'store' ? 'active' : ''}>
           <button
-            onClick={() => handleMenuClick("store")}
+            onClick={() => handleMenuClick('store')}
             className={`flex items-center p-4 w-full text-left ${
-              activeMenu === "store"
-                ? "bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600"
-                : "hover:bg-gray-300 text-gray-800"
+              activeMenu === 'store'
+                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                : 'hover:bg-gray-300 text-gray-800'
             }`}
           >
             <Icon
               icon="bxs:shopping-bag-alt"
               width={20}
               height={20}
-              className={activeMenu === "store" ? "text-blue-600" : ""}
+              className={activeMenu === 'store' ? 'text-blue-600' : ''}
             />
             <span className="ml-3">{t('myStore')}</span>
           </button>
+        </li>
+        <li>
+            <button 
+                className="flex items-center p-4 w-full text-left hover:bg-gray-300 text-gray-800"
+            >
+                <Icon
+                    icon="tabler:logout"
+                    width={20}
+                    height={20}
+                />
+                <span className="ml-3">{t('logout')}</span>
+            </button>
         </li>
       </ul>
     </section>

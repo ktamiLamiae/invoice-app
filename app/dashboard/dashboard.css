@@ -1,3 +1,8 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #sidebar ul li.active a,
 #sidebar-small ul li.active a {
     background-color: #E2E8F0;
