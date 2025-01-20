@@ -1,6 +1,8 @@
 "use client";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from 'next-i18next';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Client {
   id: number;
@@ -44,29 +46,30 @@ const Invoice = () => {
     paymentMethod: 'Cash',
     paidStatus: 'Unpaid',
   });
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await fetch('/api/data');
-      const fetchedData = await res.json();
-      if (fetchedData?.data?.cars && fetchedData?.data?.clients) {
-        setData({ cars: fetchedData.data.cars, clients: fetchedData.data.clients });
-      } else {
-        console.error('Data structure is incorrect');
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/data');
+        const { data } = await res.json();
+
+        if (data?.cars && data?.clients) {
+          setData({ cars: data.cars, clients: data.clients });
+        } else {
+          console.error('Data structure is incorrect');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { clientId, carId, amount, advance, memo, date, dueDate, paymentMethod, paidStatus } = formData;
     const client = data.clients.find((c) => c.id === Number(clientId));
+    // console.log('Selected client:', client);
 
     const bodyData = {
       client_id: clientId,
@@ -78,9 +81,9 @@ const Invoice = () => {
       dueDate,
       paymentMethod,
       paidStatus,
-      company_id: client?.isCompany === 1 ? client.company_id : null,
+      compagny_id: client?.isCompany === 1 ? client.compagny_id : null,
     };
-
+    console.log('Payload being sent:', bodyData);
     try {
       const res = await fetch('/api/create-invoice', {
         method: 'POST',
@@ -89,20 +92,35 @@ const Invoice = () => {
       });
 
       if (res.ok) {
-        console.log('Invoice created successfully');
+        toast.success(t('success_created'));
       } else {
-        console.error('Failed to create invoice');
+        toast.error('failed_created');
       }
     } catch (error) {
-      console.error('Error submitting invoice:', error);
+      console.error('Error creating invoice:', error);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    console.log(`${name}: ${value}`);
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+
+  const resetForm = () => {
+    setFormData({
+      clientId: '',
+      carId: '',
+      amount: '',
+      advance: '',
+      memo: '',
+      date: '',
+      dueDate: '',
+      paymentMethod: 'Cash',
+      paidStatus: 'Unpaid',
+    });
+  };
   return (
     <div className="rounded-lg shadow-md bg-white p-6 w-full break-words">
       <h5 className="card-title text-xl font-semibold">{t('invoice_form')}</h5>
@@ -261,7 +279,8 @@ const Invoice = () => {
               </span>
             </button>
             <button
-              type="reset"
+              type="button"
+              onClick={resetForm}
               className="group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-red-500 text-white rounded-lg"
             >
               <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
@@ -271,6 +290,7 @@ const Invoice = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

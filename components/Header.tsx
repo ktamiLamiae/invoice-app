@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useTranslation } from 'next-i18next';
 import i18n from '../lib/i18n';
+import Link from 'next/link';
 
 interface UserInfo {
   name: string;
