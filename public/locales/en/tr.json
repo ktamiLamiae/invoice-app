@@ -29,5 +29,19 @@
   "paid":"Paid",
   "unpaid":"Unpaid",
   "amount": "Amount",
-  "advance": "Advance"
+  "advance": "Advance",
+  "client_required":"Client is required",
+  "vehicle_required":"Vehicle is required",
+  "amount_required":"Amount is required",
+  "advance_required":"Advance is required",
+  "date_required":"Date is required",
+  "deadline_required":"Deadline is required",
+  "success_created": "Created successfully",
+  "failed_created": "Failed to create",
+  "err_created": "Error creating invoice",
+  "name": "Name",
+  "passwords_do_not_match":"Passwords do not match",
+  "confirm_password":"Confirm password",
+  "profile_form":"Profile form",
+  "select_company":"Select company"
 }

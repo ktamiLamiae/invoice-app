@@ -25,5 +25,19 @@
   "paid": "Bezahlt",
   "unpaid": "Unbezahlt",
   "amount": "Betrag",
-  "advance": "Vorsteuer"
+  "advance": "Vorsteuer",
+  "client_required": "Kunde ist erforderlich",
+  "vehicle_required": "Fahrzeug ist erforderlich",
+  "amount_required": "Betrag ist erforderlich",
+  "advance_required": "Anzahlung ist erforderlich",
+  "date_required": "Datum ist erforderlich",
+  "deadline_required": "Frist ist erforderlich",
+  "success_created": "Erfolgreich erstellt",
+  "failed_created": "Fehlgeschlagen",
+  "err_created": "Fehler beim Erstellen",
+  "name": "Name",
+  "passwords_do_not_match": "Passwörter stimmen nicht überein",
+  "confirm_password": "Passwort bestätigen",
+  "profile_form": "Profilformular",
+  "select_company": "Firma auswahlen"
 }
