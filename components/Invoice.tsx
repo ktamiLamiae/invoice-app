@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from 'next-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLoader } from "@/app/contexts/LoaderContext";
 
 interface Client {
   id: number;
@@ -121,6 +122,17 @@ const Invoice = () => {
       paidStatus: 'Unpaid',
     });
   };
+  const { setIsLoading } = useLoader();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [setIsLoading]);
   return (
     <div className="rounded-lg shadow-md bg-white p-6 w-full break-words">
       <h5 className="card-title text-xl font-semibold">{t('invoice_form')}</h5>

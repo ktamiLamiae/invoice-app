@@ -60,7 +60,8 @@ const Header: React.FC = () => {
               <option value="de">Deutsch</option>
             </select>
           </div>
-          <a href="#" className="flex items-center text-gray-800">
+          {/* <a href="#" className="flex items-center text-gray-800"> */}
+          <Link href="/dashboard/pages/user-profile" className="flex items-center text-gray-800">
             <span className="mr-2 text-lg">{userInfo.name}</span>
             <Image
               src={userInfo.profileImage}
@@ -70,7 +71,7 @@ const Header: React.FC = () => {
               height={36}
               unoptimized
             />
-          </a>
+          </Link>
         </div>
       </nav>
     </div>
