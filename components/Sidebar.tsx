@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 type MenuType = 'dashboard' | 'add-invoices' | 'list-invoices';
 
@@ -14,7 +15,9 @@ const Sidebar: React.FC = () => {
   const handleMenuClick = (menu: MenuType) => {
     setActiveMenu(menu);
   };
-
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/login' });
+  };
   return (
     <section
       id="sidebar"
@@ -22,8 +25,8 @@ const Sidebar: React.FC = () => {
         isSidebarVisible ? 'block' : 'hidden'
       } lg:block`}
     >
-      <div className="flex items-center p-4 text-blue-600 font-bold text-2xl">
-        <Icon icon="bxs:smile" className="text-blue-600" width={24} height={24} />
+      <div className="flex items-center p-4 text-indigo-700 font-bold text-2xl">
+        <Icon icon="bxs:smile" className="text-indigo-700" width={24} height={24} />
         <span className="ml-2">{t('appName')}</span>
       </div>
       <ul className="mt-12 space-y-4">
@@ -32,7 +35,7 @@ const Sidebar: React.FC = () => {
             href="/dashboard"
             className={`flex items-center p-4 w-full text-left ${
               activeMenu === 'dashboard'
-                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
                 : 'hover:bg-gray-300 text-gray-800'
             }`}
             onClick={() => handleMenuClick('dashboard')}
@@ -41,7 +44,7 @@ const Sidebar: React.FC = () => {
               icon="bxs:dashboard"
               width={20}
               height={20}
-              className={activeMenu === 'dashboard' ? 'text-blue-600' : ''}
+              className={activeMenu === 'dashboard' ? 'text-indigo-700' : ''}
             />
             <span className="ml-3">{t('dashboard')}</span>
           </Link>
@@ -51,7 +54,7 @@ const Sidebar: React.FC = () => {
             href="/dashboard/pages/add-invoices"
             className={`flex items-center p-4 w-full text-left ${
               activeMenu === 'add-invoices'
-                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
                 : 'hover:bg-gray-300 text-gray-800'
             }`}
             onClick={() => handleMenuClick('add-invoices')}
@@ -60,7 +63,7 @@ const Sidebar: React.FC = () => {
               icon="bxs:shopping-bag-alt"
               width={20}
               height={20}
-              className={activeMenu === 'add-invoices' ? 'text-blue-600' : ''}
+              className={activeMenu === 'add-invoices' ? 'text-indigo-700' : ''}
             />
             <span className="ml-3">{t('addInvoices')}</span>
           </Link>
@@ -70,7 +73,7 @@ const Sidebar: React.FC = () => {
             href="/dashboard/pages/list-invoices"
             className={`flex items-center p-4 w-full text-left ${
               activeMenu === 'list-invoices'
-                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
                 : 'hover:bg-gray-300 text-gray-800'
             }`}
             onClick={() => handleMenuClick('list-invoices')}
@@ -79,7 +82,7 @@ const Sidebar: React.FC = () => {
               icon="bxs:shopping-bag-alt"
               width={20}
               height={20}
-              className={activeMenu === 'list-invoices' ? 'text-blue-600' : ''}
+              className={activeMenu === 'list-invoices' ? 'text-indigo-700' : ''}
             />
             <span className="ml-3">{t('listInvoices')}</span>
           </Link>
@@ -87,7 +90,7 @@ const Sidebar: React.FC = () => {
         <li>
           <button
             className="flex items-center p-4 w-full text-left hover:bg-gray-300 text-gray-800"
-            // onClick={handleLogout}
+            onClick={handleLogout}
           >
             <Icon
               icon="tabler:logout"

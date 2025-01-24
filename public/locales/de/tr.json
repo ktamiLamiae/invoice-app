@@ -39,5 +39,15 @@
   "passwords_do_not_match": "Passwörter stimmen nicht überein",
   "confirm_password": "Passwort bestätigen",
   "profile_form": "Profilformular",
-  "select_company": "Firma auswahlen"
+  "select_company": "Firma auswahlen",
+  "FullName" : "Vollständiger Name",
+  "somethingWentWrong": "Etwas ist schief gelaufen",
+  "invalidCredentials": "Ungültige Anmeldeinformationen",
+  "invalidEmail": "Ungültige E-Mail-Adresse",
+  "passwordTooShort": "Das Passwort muss mindestens 6 Zeichen lang sein",
+  "loading" : "Laden...",
+  "change_image": "Bild wechseln",
+  "enter_email": "E-Mail eingeben",
+  "enter_password": "Passwort eingeben",
+  "create_invoice": "Rechnung erstellen"
 }

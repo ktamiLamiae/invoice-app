@@ -39,5 +39,15 @@
   "passwords_do_not_match": "Les mots de passe ne correspondent pas",
   "confirm_password": "Confirmer le mot de passe",
   "profile_form": "Formulaire de profil",
-  "select_company": "Sélectionner une compagnie"
+  "select_company": "Sélectionner une compagnie",
+  "FullName" : "Nom complet",
+  "somethingWentWrong": "Quelque chose s'est mal passé",
+  "invalidCredentials": "Identifiants invalides",
+  "invalidEmail": "Adresse email invalide",
+  "passwordTooShort": "Le mot de passe doit avoir au moins 6 caractères",
+  "loading" : "Chargement...",
+  "change_image": "Changer d'image",
+  "enter_email": "Entrez votre email",
+  "enter_password": "Entrez votre mot de passe",
+  "create_invoice": "Créer une facture"
 }

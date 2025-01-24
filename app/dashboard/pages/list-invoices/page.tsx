@@ -1,8 +1,11 @@
+import ListInvoices from '@/components/ListInvoices'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>List - Invoices</div>
+    <>
+      <ListInvoices />
+    </>
   )
 }
 

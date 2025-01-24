@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from 'next/image';
+import { useSession } from "next-auth/react";
 
 interface ProfileData {
   id: number;
@@ -19,6 +21,7 @@ interface Company {
 
 const UserProfile: React.FC = () => {
   const { t } = useTranslation();
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +32,10 @@ const UserProfile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [data, setData] = useState<ProfileData | null>(null);
   const [companies, setCompanies] = useState<Company[]>([]);
-
+  const [profileImage, setProfileImage] = useState<string>(
+    session?.user?.image || "/images/default-img.jpg"
+  );
+  const [imageFile, setImageFile] = useState<File | null>(null); 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +72,6 @@ const UserProfile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { name, email, password, confirmPassword, companyId } = formData;
-    // console.log(formData);
     if (password !== confirmPassword) {
       setErrorMessage(t("passwords_do_not_match"));
       return;
@@ -76,9 +81,12 @@ const UserProfile: React.FC = () => {
       setErrorMessage(t("please_fill_all_fields"));
       return;
     }
+    // if (imageFile) {
+    //   form.append("image", imageFile);
+    // }
 
     try {
-      const dataToSend = { name, email, password, companyId, id: data?.id };
+      const dataToSend = { name, email, password, companyId, id: data?.id, image: imageFile };
       const res = await fetch("/api/update-profile", {
         method: "PUT",
         headers: {
@@ -102,6 +110,19 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          setProfileImage(reader.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+      setImageFile(file);
+    }
+  };
   const resetForm = () => {
     setFormData({
       name: "",
@@ -121,6 +142,30 @@ const UserProfile: React.FC = () => {
             <div className="col-span-12">
               <div className="flex flex-col gap-4">
                 {errorMessage && <div className="text-red-500 text-sm">{errorMessage}</div>}
+                <div className="relative group rounded-full overflow-hidden w-20 h-20 bg-gray-200">
+                  <Image
+                    className="w-full h-full object-cover hover:cursor-pointer"
+                    src={profileImage}
+                    width={100}
+                    height={100}
+                    alt="User profile image"
+                  />
+                  <div className="absolute inset-0 bg-gray-500 bg-opacity-60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <label
+                      htmlFor="imageUpload"
+                      className="text-white text-sm text-center cursor-pointer"
+                    >
+                      {t("change_image")}
+                    </label>
+                    <input
+                      id="imageUpload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                  </div>
+                </div>
                 <div>
                   <label className="text-sm font-medium text-gray-900" htmlFor="name">
                     {t("name")}
