@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Icon } from '@iconify/react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
-type MenuType = 'dashboard' | 'store';
+type MenuType = 'dashboard' | 'add-invoices' | 'list-invoices';
 
 const Sidebar: React.FC = () => {
   const { t } = useTranslation();
@@ -13,9 +15,9 @@ const Sidebar: React.FC = () => {
   const handleMenuClick = (menu: MenuType) => {
     setActiveMenu(menu);
   };
-
-  // console.log('Current language in Sidebar:', i18n.language, t('welcome'));
-
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/login' });
+  };
   return (
     <section
       id="sidebar"
@@ -23,58 +25,81 @@ const Sidebar: React.FC = () => {
         isSidebarVisible ? 'block' : 'hidden'
       } lg:block`}
     >
-      <a href="#" className="flex items-center p-4 text-blue-600 font-bold text-2xl">
-        <Icon icon="bxs:smile" className="text-blue-600" width={24} height={24} />
+      <div className="flex items-center p-4 text-indigo-700 font-bold text-2xl">
+        <Icon icon="bxs:smile" className="text-indigo-700" width={24} height={24} />
         <span className="ml-2">{t('appName')}</span>
-      </a>
+      </div>
       <ul className="mt-12 space-y-4">
-        <li className={activeMenu === 'dashboard' ? 'active' : ''}>
-          <button
-            onClick={() => handleMenuClick('dashboard')}
+        <li>
+          <Link
+            href="/dashboard"
             className={`flex items-center p-4 w-full text-left ${
               activeMenu === 'dashboard'
-                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
                 : 'hover:bg-gray-300 text-gray-800'
             }`}
+            onClick={() => handleMenuClick('dashboard')}
           >
             <Icon
               icon="bxs:dashboard"
               width={20}
               height={20}
-              className={activeMenu === 'dashboard' ? 'text-blue-600' : ''}
+              className={activeMenu === 'dashboard' ? 'text-indigo-700' : ''}
             />
             <span className="ml-3">{t('dashboard')}</span>
-          </button>
+          </Link>
         </li>
-        <li className={activeMenu === 'store' ? 'active' : ''}>
-          <button
-            onClick={() => handleMenuClick('store')}
+        <li>
+          <Link
+            href="/dashboard/pages/add-invoices"
             className={`flex items-center p-4 w-full text-left ${
-              activeMenu === 'store'
-                ? 'bg-gray-200 text-blue-600 font-bold border-l-4 border-blue-600'
+              activeMenu === 'add-invoices'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
                 : 'hover:bg-gray-300 text-gray-800'
             }`}
+            onClick={() => handleMenuClick('add-invoices')}
           >
             <Icon
               icon="bxs:shopping-bag-alt"
               width={20}
               height={20}
-              className={activeMenu === 'store' ? 'text-blue-600' : ''}
+              className={activeMenu === 'add-invoices' ? 'text-indigo-700' : ''}
             />
-            <span className="ml-3">{t('myStore')}</span>
-          </button>
+            <span className="ml-3">{t('addInvoices')}</span>
+          </Link>
         </li>
         <li>
-            <button 
-                className="flex items-center p-4 w-full text-left hover:bg-gray-300 text-gray-800"
-            >
-                <Icon
-                    icon="tabler:logout"
-                    width={20}
-                    height={20}
-                />
-                <span className="ml-3">{t('logout')}</span>
-            </button>
+          <Link
+            href="/dashboard/pages/list-invoices"
+            className={`flex items-center p-4 w-full text-left ${
+              activeMenu === 'list-invoices'
+                ? 'bg-gray-200 text-indigo-700 font-bold border-l-4 border-blue-600'
+                : 'hover:bg-gray-300 text-gray-800'
+            }`}
+            onClick={() => handleMenuClick('list-invoices')}
+          >
+            <Icon
+              icon="bxs:shopping-bag-alt"
+              width={20}
+              height={20}
+              className={activeMenu === 'list-invoices' ? 'text-indigo-700' : ''}
+            />
+            <span className="ml-3">{t('listInvoices')}</span>
+          </Link>
+        </li>
+        <li>
+          <button
+            className="flex items-center p-4 w-full text-left hover:bg-gray-300 text-gray-800"
+            onClick={handleLogout}
+          >
+            <Icon
+              icon="tabler:logout"
+              width={20}
+              height={20}
+              className="text-gray-800"
+            />
+            <span className="ml-3">{t('logout')}</span>
+          </button>
         </li>
       </ul>
     </section>

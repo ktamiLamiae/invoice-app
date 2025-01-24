@@ -1,14 +1,10 @@
 import React from "react";
-import Invoice from '../../components/Invoice';
-import UserProfile from "@/components/UserProfile";
-
-const page = () => {
+const Page = () => {
   return (
     <>
-    {/* <Invoice /> */}
-    <UserProfile />
+      <div>Contenu de la page</div>
     </>
   );
 };
 
-export default page;
+export default Page;

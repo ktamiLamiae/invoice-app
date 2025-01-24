@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from 'next-i18next';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLoader } from "@/app/contexts/LoaderContext";
 
 interface Client {
   id: number;
@@ -121,6 +122,7 @@ const Invoice = () => {
       paidStatus: 'Unpaid',
     });
   };
+
   return (
     <div className="rounded-lg shadow-md bg-white p-6 w-full break-words">
       <h5 className="card-title text-xl font-semibold">{t('invoice_form')}</h5>
@@ -272,7 +274,7 @@ const Invoice = () => {
           <div className="flex gap-3 mt-6">
             <button
               type="submit"
-              className="group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
+              className="group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
             >
               <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
                 {t('save')}

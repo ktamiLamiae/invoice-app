@@ -39,5 +39,15 @@
   "passwords_do_not_match":"Las contrasenas no coinciden",
   "confirm_password": "Confirmar contrasena",
   "profile_form": "Formulario de perfil",
-  "select_company": "Seleccionar empresa"
+  "select_company": "Seleccionar empresa",
+  "FullName" : "Nombre completo",
+  "somethingWentWrong": "Algo salio mal",
+  "invalidCredentials": "Credenciales invalidas",
+  "invalidEmail": "Correo electronico invalido",
+  "passwordTooShort": "La contrasena debe tener al menos 6 caracteres",
+  "loading" : "Cargando...",
+  "change_image": "Cambiar imagen",
+  "enter_email": "Ingresa tu correo electronico",
+  "enter_password": "Ingresa tu contrasena",
+  "create_invoice": "Crear factura"
 }
