@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLoading } from "../app/contexts/LoadingContext";
 
 interface Invoice {
   id: number;
@@ -22,9 +23,11 @@ const ListInvoices: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const { t } = useTranslation();
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const res = await fetch("/api/list-invoices", {
           method: "GET",
@@ -36,10 +39,12 @@ const ListInvoices: React.FC = () => {
         setInvoices(data);
       } catch (error) {
         console.error("Error fetching invoices:", error);
-      } 
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
-  }, []);
+  }, [setLoading]);
 
   const toggleMenu = (index: number) => {
     setOpenMenuIndex(openMenuIndex === index ? null : index);
@@ -62,16 +67,16 @@ const ListInvoices: React.FC = () => {
     <div className="relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
       <div className="flex flex-row justify-between items-center m-6">
         <h3 className="text-lg font-semibold ml-3 text-slate-800">
-          {t("list_invoices")}
+          {t("listInvoices")}
         </h3>
         <Link
           href="/dashboard/pages/add-invoices"
           className="group relative flex items-stretch justify-center p-1.5 text-center font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
         >
-          {t("create_invoice")}
+          {t("addInvoice")}
         </Link>
       </div>
-
+      <div className="mt-6">
         <table className="w-full text-left table-auto min-w-max">
           <thead>
             <tr>
@@ -182,6 +187,7 @@ const ListInvoices: React.FC = () => {
             ))}
           </tbody>
         </table>
+        </div> 
     </div>
   );
 };

@@ -101,36 +101,6 @@ const LoginForm: React.FC = () => {
                                 />
                                 {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                             </div>
-                            {/* <div className="flex flex-col space-y-1">
-                                <div className="flex justify-between items-center">
-                                    <label htmlFor="password" className="text-sm font-medium text-gray-700">
-                                        {t("password")}
-                                    </label>
-                                    <a href="#" className="text-sm text-indigo-600 hover:text-indigo-700">
-                                        {t("forgotPassword")}
-                                    </a>
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        name="password"
-                                        id="password"
-                                        autoComplete="current-password"
-                                        value={password}
-                                        className="mt-1 block w-full rounded-md bg-white px-3 py-2 text-sm sm:text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute top-2 right-2 text-gray-500"
-                                    >
-                                        {showPassword ? <HiEyeOff /> : <HiEye />}
-                                    </button>
-                                </div>
-                                {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
-                            </div> */}
                             <div className="flex flex-col space-y-1">
                                 <div className="flex justify-between items-center">
                                     <label htmlFor="password" className="text-sm font-medium text-gray-700">
@@ -158,6 +128,7 @@ const LoginForm: React.FC = () => {
                                         {showPassword ? <HiEyeOff /> : <HiEye />}
                                     </button>
                                 </div>
+                                {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
                             </div>
                             <div>
                                 <button

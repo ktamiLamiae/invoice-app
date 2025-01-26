@@ -49,5 +49,6 @@
   "change_image": "Cambiar imagen",
   "enter_email": "Ingresa tu correo electronico",
   "enter_password": "Ingresa tu contrasena",
-  "create_invoice": "Crear factura"
+  "addInvoice": "Agregar una factura",
+  "listInvoices": "Lista de facturas"
 }

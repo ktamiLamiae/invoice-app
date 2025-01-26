@@ -53,5 +53,6 @@
   "change_image": "Change image",
   "enter_email": "Enter your email",
   "enter_password": "Enter your password",
-  "create_invoice": "Create invoice"
+  "addInvoice": "Create invoice",
+  "listInvoices": "List invoices"
 }
