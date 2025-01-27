@@ -1,9 +1,9 @@
 import React from "react";
+import Dashboard from "../../components/Dashboard";
+
 const Page = () => {
   return (
-    <>
-      <div>Contenu de la page</div>
-    </>
+    <Dashboard />
   );
 };
 

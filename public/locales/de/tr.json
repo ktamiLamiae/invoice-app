@@ -49,5 +49,6 @@
   "change_image": "Bild wechseln",
   "enter_email": "E-Mail eingeben",
   "enter_password": "Passwort eingeben",
-  "create_invoice": "Rechnung erstellen"
+  "addInvoice": "Rechnung hinzufügen",
+  "listInvoices": "Rechnungen auflisten"
 }

@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from 'next/image';
 import { useSession } from "next-auth/react";
+import { useLoading } from "../app/contexts/LoadingContext"; // Importer le context
 
 interface ProfileData {
   id: number;
@@ -22,6 +23,7 @@ interface Company {
 const UserProfile: React.FC = () => {
   const { t } = useTranslation();
   const { data: session } = useSession();
+  const { setLoading } = useLoading(); // Utiliser le setLoading du contexte
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,9 +37,11 @@ const UserProfile: React.FC = () => {
   const [profileImage, setProfileImage] = useState<string>(
     session?.user?.image || "/images/default-img.jpg"
   );
-  const [imageFile, setImageFile] = useState<File | null>(null); 
+  const [imageFile, setImageFile] = useState<File | null>(null);
   useEffect(() => {
     const fetchData = async () => {
+      if (!session) return;
+      setLoading(true); // Activer le chargement
       try {
         const res = await fetch("/api/get-profile");
         const result = await res.json();
@@ -55,11 +59,13 @@ const UserProfile: React.FC = () => {
           setErrorMessage(result.message);
         }
       } catch (error) {
-        setErrorMessage("Error fetching user data");
+        setErrorMessage(`Error fetching user data: ${error.message}`);
+      } finally {
+        setLoading(false); // Désactiver le chargement
       }
     };
     fetchData();
-  }, []);
+  }, [session, setLoading]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -81,10 +87,8 @@ const UserProfile: React.FC = () => {
       setErrorMessage(t("please_fill_all_fields"));
       return;
     }
-    // if (imageFile) {
-    //   form.append("image", imageFile);
-    // }
 
+    setLoading(true);
     try {
       const dataToSend = { name, email, password, companyId, id: data?.id, image: imageFile };
       const res = await fetch("/api/update-profile", {
@@ -98,15 +102,13 @@ const UserProfile: React.FC = () => {
       const result = await res.json();
       if (result.success) {
         toast.success(t("profile_updated_successfully"));
-        // resetForm({
-        //     password: "",
-        //     confirmPassword: ""
-        // });
       } else {
         toast.error(t("profile_update_failed"));
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -246,27 +248,27 @@ const UserProfile: React.FC = () => {
                   />
                 </div>
               </div>
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg"
+                >
+                  <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
+                    {t('save')}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="w-full sm:w-auto group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-red-500 hover:bg-red-600 text-white rounded-lg"
+                >
+                  <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
+                    {t('cancel')}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex gap-3 mt-6">
-          <button
-            type="submit"
-            className="group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
-          >
-            <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
-              {t("save")}
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={resetForm}
-            className="group relative flex items-stretch justify-center p-0.5 text-center font-medium bg-red-500 text-white rounded-lg"
-          >
-            <span className="flex items-center gap-2 transition-all duration-150 justify-center rounded-md px-4 py-2 text-sm">
-              {t("cancel")}
-            </span>
-          </button>
         </div>
       </div>
       <ToastContainer />

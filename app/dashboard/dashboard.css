@@ -6,12 +6,12 @@
 #sidebar ul li.active a,
 #sidebar-small ul li.active a {
     background-color: #E2E8F0;
-    color: #3182CE;
-    border-left: 4px solid #3182CE;
+    color: #4c51bf;
+    border-left: 4px solid #4c51bf;
     font-weight: bold;
 }
 
 #sidebar ul li.active a i,
 #sidebar-small ul li.active a i {
-    color: #3182CE;
+    color: #4c51bf;
 }
