@@ -21,7 +21,7 @@ export default NextAuth({
             password: '',
             database: 'invoicing_db',
           });
-          const [rows]: any = await connection.execute(
+          const [rows] = await connection.execute(
             'SELECT * FROM users WHERE email = ?',
             [email]
           );
@@ -36,7 +36,7 @@ export default NextAuth({
             throw new Error('Invalid credentials');
           }
 
-          return { id: user.id, email: user.email, name: user.name };
+          return { id: user.id, email: user.email, name: user.name, image: user.image };
         } catch (error) {
           console.error('Authorization failed:', error);
           return null;
@@ -53,6 +53,7 @@ export default NextAuth({
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.image = user.image;  
       }
       return token;
     },
@@ -60,6 +61,7 @@ export default NextAuth({
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.name = token.name;
+      session.user.image = token.image; 
       return session;
     },
   },

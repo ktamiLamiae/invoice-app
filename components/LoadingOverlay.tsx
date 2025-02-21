@@ -8,7 +8,7 @@ const LoadingOverlay: React.FC = () => {
   return (
     isLoading && (
       <div className="fixed inset-0 bg-gray-200 flex items-center justify-center z-50">
-        <PropagateLoader color="#4c51bf" size={30} margin={2} />
+        <PropagateLoader color="#4c51bf" size={30} />
       </div>
     )
   );

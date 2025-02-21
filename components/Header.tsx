@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import i18n from '../lib/i18n';
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
+import Sidebar from './Sidebar';
 
 const Header: React.FC = () => {
   const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
@@ -13,6 +14,10 @@ const Header: React.FC = () => {
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
+  const closeSidebar = () => {
+    setSidebarVisible(false); 
+  };
+
 
   const handleLanguageChange = (language: 'en' | 'fr' | 'es' | 'de') => {
     i18n.changeLanguage(language);
@@ -51,7 +56,6 @@ const Header: React.FC = () => {
           </div>
           <Link href="/dashboard/pages/user-profile" className="flex items-center text-gray-800">
             <div className="flex flex-col text-right mr-2">
-              {/* {session?.user?.name && <span className="text-lg font-medium">{session.user.name}</span>} */}
               {session?.user?.email && <span className="text-sm text-gray-600">{session.user.email}</span>}
             </div>
             <Image
@@ -65,6 +69,16 @@ const Header: React.FC = () => {
           </Link>
         </div>
       </nav>
+
+      {isSidebarVisible && (
+        <div
+          className={`fixed top-0 left-0 w-60 h-full bg-white z-50 font-sans transition-all duration-300 ease-in-out lg:block ${
+            isSidebarVisible ? 'block' : 'hidden'
+          }`}
+        >
+          <Sidebar isSidebarVisible={isSidebarVisible} closeSidebar={closeSidebar} />
+        </div>
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from 'next/image';
 import { useSession } from "next-auth/react";
-import { useLoading } from "../app/contexts/LoadingContext"; // Importer le context
+import { useLoading } from "../app/contexts/LoadingContext";
 
 interface ProfileData {
   id: number;
@@ -41,7 +41,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!session) return;
-      setLoading(true); // Activer le chargement
+      setLoading(true);
       try {
         const res = await fetch("/api/get-profile");
         const result = await res.json();
@@ -58,10 +58,14 @@ const UserProfile: React.FC = () => {
         } else {
           setErrorMessage(result.message);
         }
-      } catch (error) {
-        setErrorMessage(`Error fetching user data: ${error.message}`);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage("An unknown error occurred.");
+        }
       } finally {
-        setLoading(false); // Désactiver le chargement
+        setLoading(false);
       }
     };
     fetchData();
@@ -78,30 +82,41 @@ const UserProfile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { name, email, password, confirmPassword, companyId } = formData;
+  
     if (password !== confirmPassword) {
       setErrorMessage(t("passwords_do_not_match"));
       return;
     }
-
-    if (!name || !email || !password || !confirmPassword || !companyId) {
+  
+    if (!name || !email || !companyId) {
       setErrorMessage(t("please_fill_all_fields"));
       return;
     }
-
+  
     setLoading(true);
     try {
-      const dataToSend = { name, email, password, companyId, id: data?.id, image: imageFile };
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", name);
+      formDataToSend.append("email", email);
+      formDataToSend.append("password", password);
+      formDataToSend.append("companyId", companyId);
+      formDataToSend.append("id", data?.id?.toString() ?? "");
+      if (imageFile) {
+        formDataToSend.append("image", imageFile);
+      }
       const res = await fetch("/api/update-profile", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToSend),
+        body: formDataToSend, 
       });
-
+  
       const result = await res.json();
       if (result.success) {
         toast.success(t("profile_updated_successfully"));
+        setFormData({
+            ...formData,
+            password: '',
+            confirmPassword: '',
+        });
       } else {
         toast.error(t("profile_update_failed"));
       }
@@ -111,7 +126,6 @@ const UserProfile: React.FC = () => {
       setLoading(false);
     }
   };
-
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

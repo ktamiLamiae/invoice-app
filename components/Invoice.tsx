@@ -12,7 +12,7 @@ interface Client {
   companyName?: string;
   surname?: string;
   firstname?: string;
-  company_id?: number;
+  compagny_id?: number;
 }
 
 interface Car {
